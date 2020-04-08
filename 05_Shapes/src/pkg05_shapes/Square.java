@@ -9,18 +9,16 @@ package pkg05_shapes;
  *
  * @author filip
  */
-public class Circle extends Shape { // Circle je typove kompatibilni s Shape
+public class Square extends Shape { // Circle je typove kompatibilni s Shape
 
    // data
     
-    public double r;
-    public double d;
+    private double a;
     private double area;
     
     // public Circle(double r){
-        public Circle(double r){
-        this.r=r;
-        this.d=d;
+        public Square(double a){
+        this.a=a;
         this.area=area();
     }
     
@@ -31,34 +29,28 @@ public class Circle extends Shape { // Circle je typove kompatibilni s Shape
    */
     // tovarni metoda - factory-method
     
-    public static Circle getInstanceD(double d){
-        return new Circle(d/2);
+   
+    
+    public static Circle getInstanceA(double a){
+        return new Circle(a);
     }
     
-    public static Circle getInstanceR(double r){
-        return new Circle(r);
-    }
-    
-    public double getR() {
-        return r;
-    }
-    
-    public double getD() {
-        return r*2;
+    public double getA() {
+        return a;
     }
     
     public double getArea() {
         return area;
     }
     
-    private double area() {
-        return Math.PI*r*r;
+    private double area(){
+        return a*a;
     }
     
     
     @Override
     public String toString(){
-        return "Circle{" + "r=" + r + '}';
+        return "Square{" + "a=" + a + '}';
     }
     
     @Override
@@ -68,5 +60,4 @@ public class Circle extends Shape { // Circle je typove kompatibilni s Shape
     
     
     
-   
 }

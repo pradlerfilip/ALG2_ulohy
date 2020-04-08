@@ -39,6 +39,7 @@ public class Rectangle extends Shape{
     
     @Override
     public double computeArea(){
+        area = getA() * getB();
         return getArea();
     }
 

@@ -11,5 +11,9 @@ package pkg05_shapes;
  */
 public abstract class Shape {
     public abstract double computeArea();
- 
+    public abstract double getArea();
+    
+    
+    
 }
+
