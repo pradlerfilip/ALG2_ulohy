@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkg05_shapes;
+package interfacevariant;
+
+import pkg05_shapes.*;
 
 /**
  *
  * @author filip
  */
-public class Circle extends Shape { // Circle je typove kompatibilni s Shape
+public class Circle implements ShapeInterface { // Circle je typove kompatibilni s ShapeInterface, 
 
    // data
     
@@ -58,8 +60,8 @@ public class Circle extends Shape { // Circle je typove kompatibilni s Shape
     
     @Override
     public String toString(){
-        // return "Circle{" + "r=" + r + '}';
-        return super.toString() + String.format(" r= %.2f ", r);
+         return "Circle{" + "r=" + r + '}';
+        //return super.toString() + String.format(" r= %.2f ", r);
     }
     
     @Override
@@ -67,6 +69,11 @@ public class Circle extends Shape { // Circle je typove kompatibilni s Shape
         return getArea();
     }
     
+    public static void main(String[] args)
+    {
+        Circle c1= Circle.getInstanceR(4);
+        System.out.println(c1.toString());
+    }
     
    
 }

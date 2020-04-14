@@ -50,7 +50,7 @@ public class Square extends Shape { // Circle je typove kompatibilni s Shape
     
     @Override
     public String toString(){
-        return "Square{" + "a=" + a + '}';
+        return super.toString() + String.format(" a= %.2f ", a);
     }
     
     @Override

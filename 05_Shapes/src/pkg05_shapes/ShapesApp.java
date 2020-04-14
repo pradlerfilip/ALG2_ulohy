@@ -6,6 +6,10 @@
 package pkg05_shapes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -49,6 +53,9 @@ public class ShapesApp {
                 case 8:
                     getObjectInfo();
                     break;
+                case 9:
+                    sortByArea();
+                    break;
                 default:
                     System.out.println("Chybna volba");
             }
@@ -66,6 +73,7 @@ public class ShapesApp {
         System.out.println("6. Vypocti celkovou plochu");
         System.out.println("7. Vypis utvar s najvetsi plochou");
         System.out.println("8. Vypis plochu vybraneho utvaru");
+        System.out.println("9. pro serazeni objektu podle velikosti plochy a nasledne vypsani");
         System.out.println("0. Konec programu");
     }
     
@@ -146,9 +154,39 @@ public class ShapesApp {
         }
         choose=sc.nextInt();
         Shape obj=shapes.get(choose);
-        System.out.println(obj.toString());
-        System.out.println(obj.computeArea());
+        System.out.println(obj.toString() + "area=" + obj.computeArea());
     }
+   
+    public static void print(Object[] array)
+    {
+        for(Object object : array)
+        {
+            System.out.println(object);
+        }
+    }
+    
+     public static void print(List list)
+    {
+        for(Object object : list)
+        {
+            System.out.println(object);
+        }
+    }
+    
+    
+    //TODO zobrazit objekty setridene podle plochy
+    private static void sortByArea() {
+        Collections.sort(shapes, new Comparator<Shape>()
+        {
+            @Override
+            public int compare(Shape o1, Shape o2) {
+            return Double.compare(o1.computeArea(), o2.computeArea());
+        }
+        });
+        print(shapes);
+    }
+    
+    
     
     
 }

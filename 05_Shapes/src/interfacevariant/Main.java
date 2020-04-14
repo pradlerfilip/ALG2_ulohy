@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkg05_shapes;
+package interfacevariant;
 
+import pkg05_shapes.*;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ public class Main {
     
     public static void main(String[] args)
     {
-        /* Circle c1=Circle.getInstanceD(8);
+        Circle c1=Circle.getInstanceD(8);
         Rectangle r1=new Rectangle(2,3);
         Circle c2=Circle.getInstanceR(2.6);
         
@@ -44,21 +45,17 @@ public class Main {
         
         
         System.out.println("3. varianta");
-        ArrayList<Shape> shapes3 = new ArrayList<>(); // dynamicke pole objektu typu Shape
-        // muze obsahovat cokoliv co je typove kompatibilni
+        ArrayList<ShapeInterface> shapes3 = new ArrayList<>(); // dynamicke pole objektu typu Shape
+        // muze obsahovat cokoliv co je typove kompatibilni s ShapeInterface(Circle,Rectangle,Square)
         //Shape s=new Rectangle(5,6);
         //Rectangle r=new Shape();
         shapes3.add(c1);
         shapes3.add(Circle.getInstanceR(2.6));
         shapes3.add(r1);
         double allArea3 = 0;
-        for( Shape shape : shapes3) { // foreach
+        for( ShapeInterface shape : shapes3) { // foreach
             allArea3 += shape.computeArea(); //polymorfismus
         }
         System.out.println(allArea3);
-
-        */
-        
-        
     }
 }
