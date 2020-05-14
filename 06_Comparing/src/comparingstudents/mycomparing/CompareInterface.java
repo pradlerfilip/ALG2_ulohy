@@ -1,9 +1,8 @@
-
-package comparingstudents;
+package comparingstudents.mycomparing;
 
 /**
  *
- * @author filip
+ * @author janka
  */
 public interface CompareInterface {
     boolean isBigger(CompareInterface o);
