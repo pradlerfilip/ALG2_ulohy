@@ -1,6 +1,7 @@
 package elevengame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,15 +22,21 @@ public class Deck {
      * Generate List of all cards e.g. using DataStore class with arrays of symbols, values, nPoints
      */
     private void generateAllCards(String[] symbols, String[] values, int[] nPoints){
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (int i = 0; i < symbols.length; i++) {
+            for (int j = 0; j < values.length; j++) {
+                Card card=new Card(symbols[i],values[j],nPoints[j]);
+                deckCards.add(card);
+            }
+        }
     }
+    
     
     /**
      * Shuffle list of cards
      * An algorithm to permute an array.
      */
     private void shuffle(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        Collections.shuffle(deckCards);
     }
     
     /**
@@ -39,14 +46,20 @@ public class Deck {
      *         previously dealt.
      */
     public Card deal(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         if(getDeckSize()==0){
+            return null;
+         }
+        Card card = deckCards.get( getDeckSize()-1);
+        deckCards.remove( getDeckSize()-1);
+        return card;
     }
-
+    
     public int getDeckSize() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return deckCards.size();
     }
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if( getDeckSize()== 0 ) return true;
+        return false;
     }
 }

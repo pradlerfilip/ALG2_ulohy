@@ -8,13 +8,13 @@ import java.util.Arrays;
  */
 public class DataStore {
     private static String[] values
-            = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+            = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
 
     private static String[] symbols
-            = {"červená", "zelená", "žalud", "gule"};
+            = {"srdce", "kary", "krize", "piky"};
 
     private static int[] nPoints
-            = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0};
+            = {2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0,1};
     
     private static int nCards = 9;
     

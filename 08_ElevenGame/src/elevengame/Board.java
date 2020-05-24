@@ -38,7 +38,7 @@ public class Board implements BoardInterface{
 
     @Override
     public boolean anotherPlayIsPossible() {
-        throw new UnsupportedOperationException("Not supported yet.");
+      throw new UnsupportedOperationException("Not supported yet.");  
     }
 
     @Override
@@ -48,6 +48,6 @@ public class Board implements BoardInterface{
 
     @Override
     public boolean isWon() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (deck.isEmpty() && nCards() == 0);
     }
 }
