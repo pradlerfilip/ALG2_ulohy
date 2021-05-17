@@ -51,8 +51,8 @@ public class FileTools {
 
     public static void loadUsers(Bank bank) throws IOException {
             List<String> lines = Files.readAllLines(Paths.get("users.txt"));
+            System.out.println("Users loaded");
             for(String line : lines) {
-                System.out.println(line);
                 String[] line_array = line.split(";");
                 if ("p".equals(line_array[0])) {
                     Person person = new Person(line_array[1], line_array[2], new ArrayList<Account>(), line_array[3], line_array[4], line_array[5].charAt(0), line_array[6], Integer.parseInt(line_array[7]), Integer.parseInt(line_array[8]));
@@ -64,6 +64,7 @@ public class FileTools {
                 }
             }
     }
+
 
     public static boolean fileExists(String filename)
     {

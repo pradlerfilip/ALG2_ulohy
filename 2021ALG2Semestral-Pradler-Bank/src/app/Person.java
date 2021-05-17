@@ -2,22 +2,15 @@ package app;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author filip
- */
-
-
-
 public class Person extends User
 {
-    private String name;
-    private String surname;
-    private String address;
-    private char gender;
-    private int pID;
-    private int telNumber;
-    private ArrayList<Account> accounts;
+    protected String name;
+    protected String surname;
+    protected String address;
+    protected char gender;
+    protected int pID;
+    protected int telNumber;
+    protected ArrayList<Account> accounts;
 
     public Person(String username, String password, ArrayList<Account> accounts,String name, String surname, char gender, String address, int pID, int telNumber)
     {
@@ -37,17 +30,19 @@ public class Person extends User
         return symbol + ";" + username + ";" + password + ";" + name + ";" + surname + ";" + address + ";" + gender + ";" + pID + ";" + telNumber;
     }
 
-    public void createAccount(double balance, AccountType type)
-    {
-        Account a1 = new Account(balance,type);
-        a1.setOwner(this);
-        addAccount(a1);
-    }
-
-
+    @Override
     public void addAccount(Account account)
     {
         this.accounts.add(account);
+    }
+
+    @Override
+    public void printAccounts()
+    {
+        for(Account account : accounts)
+        {
+            System.out.println(account.toString());
+        }
     }
 
 

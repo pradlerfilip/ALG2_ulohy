@@ -1,18 +1,24 @@
 package ui;
 
-import app.Account;
-import app.Bank;
-import app.Person;
-import app.User;
+import app.*;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.*;
+import utils.BankTools;
 import utils.FileTools;
 
 
 public class UI {
     private Bank bank;
     private User currentUser=null;
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     private Scanner sc = new Scanner(System.in);
 
     public UI(Bank bank)
@@ -20,7 +26,9 @@ public class UI {
         this.bank = bank;
     }
 
-    public User getUserByUsername(String username) throws Exception {
+
+    public User getUserByUsername(String username) throws Exception
+    {
         for(User user:bank.getUsers())
         {
             if(user.getUsername().equals(username))
@@ -29,6 +37,7 @@ public class UI {
             }
         }throw new Exception("User doesnt exists");
     }
+
 
     public void runIntro()
     {
@@ -39,51 +48,68 @@ public class UI {
     }
 
     public void runLogin() throws Exception {
-        System.out.println("*****************");
-        System.out.println("1: Login user");
-        System.out.println("2: Register user");
-        System.out.println("0: Exit");
-        System.out.println("*****************");
-        System.out.print("Your choose: ");
-        int choose = sc.nextInt();
-        switch (choose) {
-            case 0:
-                System.exit(0);
-                break;
-            case 1:
-                loginUser();
-                if(loginSuccesfully())
-                {
-                    runMenu();
-                }
-                break;
-            case 2:
-                registerPerson();
-                break;
-            default:
-                System.out.println("Wrong input");
-                break;
+        while(true) {
+            System.out.println();
+            System.out.println(LocalDate.now());
+            System.out.println("*****************");
+            System.out.println("1: Login user");
+            System.out.println("2: Register user");
+            System.out.println("0: Exit");
+            System.out.println("*****************");
+            System.out.print("Your choose: ");
+            int choose = sc.nextInt();
+            switch (choose) {
+                case 0:
+                    System.exit(0);
+                    break;
+                case 1:
+                    loginUser();
+                    if (loginSuccesfully()) {
+                        runMenu();
+                    }
+                    break;
+                case 2:
+                    registerPerson();
+                    break;
+                default:
+                    System.out.println("Wrong input");
+                    break;
+            }
         }
     }
 
-    public void runMenu()
-    {
-        FileTools.createFolder(currentUser.getUsername());
-        FileTools.createFile(currentUser.getUsername() + "/" + "accounts.txt");
-        System.out.println("*****************");
-        System.out.println("1: Create Account");
-        System.out.println("*****************");
-        System.out.print("Your choose: ");
-        int choose = sc.nextInt();
+    public void runMenu() throws IOException {
+        currentUser.loadAccounts();
+        while(true) {
+            System.out.println();
+            System.out.println(LocalDate.now());
+            System.out.println("*****************");
+            System.out.println("1: Create Account");
+            System.out.println("2: Show accounts");
+            System.out.println("0: Sign off");
+            System.out.println("*****************");
+            System.out.print("Your choice: ");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 0:
+                    signOutUser();
+                    return;
+                case 1:
+                    createAccount();
+                    break;
+                case 2:
+                    currentUser.printAccounts();
+            }
+        }
     }
 
     public void registerPerson()
     {
         System.out.print("Choose username: ");
         String username = sc.next();
-        if(FileTools.searchFile("users.txt", username,0))
+        if(FileTools.searchFile("users.txt", username,1))
         {
-            while(FileTools.searchFile("users.txt", username, 0))
+            while(FileTools.searchFile("users.txt", username, 1))
             {
                 System.out.print("Username taken, use different: ");
                 username = sc.next();
@@ -106,14 +132,33 @@ public class UI {
         ArrayList<Account> accounts = new ArrayList<Account>();
         Person person = new Person(username, password, accounts, name, surname, gender, address, pID, telNumber);
         bank.addUser(person,true);
+        FileTools.createFolder(username);
+        FileTools.createFile(username + "/" + "accounts.txt");
     }
+
+    public void createAccount()
+    {
+        long number = BankTools.getUniqueAccountNumber();
+        System.out.print("Your balance: ");
+        double balance = sc.nextDouble();
+        System.out.println("NORMAL,SAVINGS,RETIREMENT,INVESTMENT,TRANSPARENT");
+        System.out.print("Your type of account: ");
+        String accountType_str = sc.next();
+        AccountType accountType = AccountType.valueOf(accountType_str.toUpperCase());
+        Account account = new Account (number,balance,accountType);
+        FileTools.appendToFile("accounts.txt",Long.toString(number));
+        currentUser.addAccount(account);
+        FileTools.appendToFile(currentUser.getUsername() + "/accounts.txt", account.toString());
+    }
+
 
     public void registerCompany()
     {
         //TODO
     }
 
-    public void loginUser() throws Exception {
+    public void loginUser() throws Exception
+    {
         System.out.print("Your username: ");
         String username = sc.next();
         System.out.print("Your password: ");
@@ -140,6 +185,12 @@ public class UI {
         {
             return false;
         }
+    }
+
+    public void signOutUser()
+    {
+        System.out.println(currentUser.getUsername() + " signed out successfully");
+        setCurrentUser(null);
     }
 
 
