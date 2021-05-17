@@ -3,11 +3,8 @@ package utils;
 import app.Account;
 import app.Bank;
 import app.Person;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,23 +18,16 @@ import java.util.Scanner;
 
 public class FileTools {
 
-    public static void createFile(String filename)
-    {
-        try
+    public static void createFile(String filename) throws IOException {
+        File file = new File(filename);
+        if (!file.exists())
         {
-            File users = new File(filename);
-            if (users.createNewFile())
-            {
-                System.out.println("File created: " + users.getName());
-            }
-            else
-            {
-                System.out.println("Users.txt loaded");
-            }
-        }catch(IOException e)
+            file.createNewFile();
+            System.out.println("CSV file created: " + file.getName());
+        }
+        else
         {
-            System.out.println("Error with writing to " + filename);
-            e.printStackTrace();
+            System.out.println(filename +  "loaded");
         }
     }
 
@@ -50,12 +40,12 @@ public class FileTools {
     }
 
     public static void loadUsers(Bank bank) throws IOException {
-            List<String> lines = Files.readAllLines(Paths.get("users.txt"));
-            System.out.println("Users loaded");
-            for(String line : lines) {
-                String[] line_array = line.split(";");
-                if ("p".equals(line_array[0])) {
-                    Person person = new Person(line_array[1], line_array[2], new ArrayList<Account>(), line_array[3], line_array[4], line_array[5].charAt(0), line_array[6], Integer.parseInt(line_array[7]), Integer.parseInt(line_array[8]));
+        BufferedReader csvReader = new BufferedReader(new FileReader("users.csv"));
+        String line = "";
+        while ((line = csvReader.readLine()) != null) {
+                String[] row = line.split(",");
+                if ("p".equals(row[0])) {
+                    Person person = new Person(row[1], row[2], new ArrayList<Account>(), row[3], row[4], row[5].charAt(0), row[6], Integer.parseInt(row[7]), Integer.parseInt(row[8]));
                     bank.addUser(person,false);
                 }
                 else
@@ -63,6 +53,7 @@ public class FileTools {
                     break;
                 }
             }
+        System.out.println("Users loaded");
     }
 
 
@@ -79,11 +70,12 @@ public class FileTools {
     {
         try
         {
-            FileWriter myWriter = new FileWriter(filename, true);
-            BufferedWriter bw = new BufferedWriter(myWriter);
-            bw.write(input);
-            bw.newLine();
-            bw.close();
+            PrintWriter csvWriter = new PrintWriter(filename);
+            StringBuilder sb = new StringBuilder();
+            sb.append(input);
+            sb.append("\n");
+            csvWriter.write(sb.toString());
+            csvWriter.close();
         } catch (IOException e)
         {
             System.out.println("Error with writing to " + filename);
@@ -95,23 +87,19 @@ public class FileTools {
     {
         try
         {
-            File myObj = new File(filename);
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine())
+            BufferedReader csvReader = new BufferedReader(new FileReader(filename));
+            String line = "";
+            while ((line = csvReader.readLine()) != null)
             {
-                String data = myReader.nextLine();
-                String data_array[] = data.split(";");
-                if(data_array[index].matches(input))
+                String[] row = line.split(",");
+                if(row[index].matches(input))
                 {
                     return true;
                 }
 
             }
-            myReader.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            System.out.println("Error with finding username");
+            csvReader.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return false;

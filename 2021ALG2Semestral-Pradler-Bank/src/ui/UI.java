@@ -103,13 +103,12 @@ public class UI {
         }
     }
 
-    public void registerPerson()
-    {
+    public void registerPerson() throws IOException {
         System.out.print("Choose username: ");
         String username = sc.next();
-        if(FileTools.searchFile("users.txt", username,1))
+        if(FileTools.searchFile("users.csv", username,1))
         {
-            while(FileTools.searchFile("users.txt", username, 1))
+            while(FileTools.searchFile("users.csv", username, 1))
             {
                 System.out.print("Username taken, use different: ");
                 username = sc.next();
@@ -133,7 +132,7 @@ public class UI {
         Person person = new Person(username, password, accounts, name, surname, gender, address, pID, telNumber);
         bank.addUser(person,true);
         FileTools.createFolder(username);
-        FileTools.createFile(username + "/" + "accounts.txt");
+        FileTools.createFile(username + "/" + "accounts.csv");
     }
 
     public void createAccount()
@@ -146,9 +145,9 @@ public class UI {
         String accountType_str = sc.next();
         AccountType accountType = AccountType.valueOf(accountType_str.toUpperCase());
         Account account = new Account (number,balance,accountType);
-        FileTools.appendToFile("accounts.txt",Long.toString(number));
+        FileTools.appendToFile("accounts.csv",Long.toString(number));
         currentUser.addAccount(account);
-        FileTools.appendToFile(currentUser.getUsername() + "/accounts.txt", account.toString());
+        FileTools.appendToFile(currentUser.getUsername() + "/accounts.csv", account.toString());
     }
 
 
@@ -163,7 +162,7 @@ public class UI {
         String username = sc.next();
         System.out.print("Your password: ");
         String password = sc.next();
-        if(FileTools.searchFile("users.txt",username,1) && FileTools.searchFile("users.txt",password,2))
+        if(FileTools.searchFile("users.csv",username,1) && FileTools.searchFile("users.csv",password,2))
         {
             System.out.println("Login successfully");
             currentUser = getUserByUsername(username);

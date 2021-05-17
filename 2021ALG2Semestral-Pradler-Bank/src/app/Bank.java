@@ -33,19 +33,20 @@ public class Bank
         this.users.add(user);
         if(write)
         {
-            FileTools.appendToFile("users.txt",user.toString());
+            FileTools.appendToFile("users.csv",user.toString());
         }
     }
 
     public void addAccountNumber(Account account)
     {
-        FileTools.appendToFile("accounts.txt", Long.toString(account.getNumber()));
+        FileTools.appendToFile("accounts.csv", Long.toString(account.getNumber()));
     }
 
     public void loadUsers() throws IOException {
-        if(!FileTools.fileExists("users.txt"))
+        if(!FileTools.fileExists("users.csv"))
         {
-            FileTools.createFile("users.txt");
+            FileTools.createFile("users.csv");
+            FileTools.appendToFile("users.csv","symbol,username,password,accounts,name,surname,gender,address,pID,telNumber");
         }
         else
         {
